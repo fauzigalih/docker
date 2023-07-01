@@ -1,6 +1,6 @@
 ### Install Portainer for Monitoring Docker
 
-Download docker image portainer from `https://hub.docker.com`<br>
+Download docker image portainer from `https://hub.docker.com` :<br>
 ```
 docker image pull portainer/portainer:latest
 ```
@@ -21,6 +21,7 @@ docker container ls
 ```
 <img width="1183" alt="image" src="https://github.com/fauzigalih/docker/assets/64176403/800b1ef0-a6a5-4873-bf33-1d5049df296c">
 <br><br><br>
+
 Lets open the browser with port 9000, example `localhost:9000`<br>
 <img width="822" alt="image" src="https://github.com/fauzigalih/docker/assets/64176403/ed3d77ee-2349-4729-91ae-ab0c0983bc2d">
 <img width="1436" alt="image" src="https://github.com/fauzigalih/docker/assets/64176403/b107e79c-2574-4001-9734-45f6d3a45a63">
