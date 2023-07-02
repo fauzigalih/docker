@@ -8,19 +8,19 @@ docker container create --name portainer --mount "type=bind,source=/home/admins/
 ```
 
 #### Docker Volume [Recomended]
-Create docker volume:
+Create docker volume:<br>
 syntax: `docker volume create volumename`
 ```
 docker volume create mysql-data
 ```
 
-Mount volume in docker container:
+Mount volume in docker container:<br>
 syntax: `docker container create --name containername --mount "type=volume,source=folderhost,destination=folderEnv" image:tag`
 ```
 docker container --name mysql --mount "type=volume,source=mysql-data,destination=/var/lib/mysql" mysql:8.0
 ```
 
-Simple syntax docker volume:
+Simple syntax docker volume:<br>
 syntax: `docker container create --name containername --volume sourcevolume:destinationvolume image:tag`
 ```
 docker container --name mysql --volume mysql-data:/var/lib/mysql" mysql:8.0
@@ -31,7 +31,7 @@ See docker volume:
 docker volume ls
 ```
 
-Delete docker volume:
+Delete docker volume:<br>
 syntax: `docker volume rm volumename`
 ```
 docker volume rm mysql-data
