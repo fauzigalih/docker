@@ -12,3 +12,5 @@ syntax: `docker container run --rm --name containerName --mount "type=bind,sourc
 ```
 docker container run --rm --name restore-mongodb --mount "type=bind,source=/home/admins/docker/backup,destination=/backup" --mount "type=volume,source=mongodb-restore,destination=/data" ubuntu:latest bash -c "cd /data && tar xvf /home/admins/docker/backup/backup.tar.gz --strip 1"
 ```
+
+
