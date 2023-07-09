@@ -1,0 +1,1 @@
+docker build -t fauzigalih/from:1.0 docker_dockerfile/from
