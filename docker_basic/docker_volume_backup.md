@@ -1,16 +1,31 @@
-### Docker Volume Backup Documentation
+### Back up, restore, or migrate data volumes
 
 #### Backup Volume
-syntax: `docker container run --rm --name containerName --mount "type=bind,source=sourceHost,destination=destinationBind" --mount "type=volume,source=targetVolumeBackup,destination=destinationVolume" image:tag tar cvf destinationBind/backup.tar.gz destinationVolume`
+For example, create a new container named `dbstore` :
 ```
-docker container run --rm --name backup-mongodb --mount "type=bind,source=/home/admins/docker/backup,destination=/backup" --mount "type=volume,source=mongodb-volume,destination=/data" ubuntu:latest tar cvf /backup/backup.tar.gz /data
+docker run -v /dbdata --name dbstore ubuntu /bin/bash
 ```
+In the next command:
+
+- Launch a new container and mount the volume from the `dbstore` container
+- Mount a local host directory as `/backup`
+- Pass a command that tars the contents of the `dbdata` volume to a `backup.tar` file inside our `/backup` directory
+```
+docker run --rm --volumes-from dbstore -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+```
+When the command completes and the container stops, it creates a backup of the `dbdata` volume.
+
 note: backup file in `sourceHost` and image ubuntu recomended for backup volume
 
 #### Restore Volume
-syntax: `docker container run --rm --name containerName --mount "type=bind,source=sourceHost,destination=destinationBind" --mount "type=volume,source=targetVolumeRestore,destination=destinationVolume" ubuntu:latest bash -c "cd destinationVolume && tar xvf destinationBind/backup.tar.gz --strip 1`
-```
-docker container run --rm --name restore-mongodb --mount "type=bind,source=/home/admins/docker/backup,destination=/backup" --mount "type=volume,source=mongodb-restore,destination=/data" ubuntu:latest bash -c "cd /data && tar xvf /home/admins/docker/backup/backup.tar.gz --strip 1"
-```
+With the backup just created, you can restore it to the same container, or to another container that you created elsewhere.
 
-
+For example, create a new container named `dbstore2`:
+```
+docker run -v /dbdata --name dbstore2 ubuntu /bin/bash
+```
+Then, un-tar the backup file in the new container’s data volume:
+```
+docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
+```
+You can use the techniques above to automate backup, migration, and restore testing using your preferred tools.
